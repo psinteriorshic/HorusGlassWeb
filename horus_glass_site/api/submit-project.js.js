@@ -83,3 +83,7 @@ export default async function handler(req, res) {
 
 function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
 async function readJson(req){const chunks=[];for await (const c of req) chunks.push(c);try{return JSON.parse(Buffer.concat(chunks).toString("utf8")||"{}")}catch{return {}}}
+
+
+
+// comments are made like this
