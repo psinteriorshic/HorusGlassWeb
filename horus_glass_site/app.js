@@ -660,14 +660,12 @@ function setupPopupForm() {
   const form = document.getElementById("customerForm");
   if (!modal || !openBtn || !closeBtn || !form) return;
 
-  // Open / close
   openBtn.addEventListener("click", (e) => { e.preventDefault(); modal.classList.add("active"); });
   closeBtn.addEventListener("click", () => modal.classList.remove("active"));
   modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove("active"); });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const btn = form.querySelector('button[type="submit"]');
     const old = btn?.textContent;
     if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
@@ -675,20 +673,20 @@ function setupPopupForm() {
     try {
       const fd = new FormData(form);
 
-      // Collect allowed files and convert to base64
       const filesInput = document.getElementById("projectFiles");
-      const allowed = new Set([
-        "image/png", "image/jpeg",
-        "application/zip", "application/json"
-      ]);
-      const maxBytes = 10 * 1024 * 1024; // 10MB cap per file
+      const allowed = new Set(["image/png","image/jpeg","application/zip","application/json"]);
+      const perFileMax = 2 * 1024 * 1024;   // 2 MB
+      const totalMax   = 4 * 1024 * 1024;   // 4 MB (request cap)
+      let totalBytes = 0;
       const attachments = [];
 
       if (filesInput?.files?.length) {
         for (const f of Array.from(filesInput.files)) {
           if (!allowed.has(f.type)) { alert(`File type not allowed: ${f.name}`); continue; }
-          if (f.size > maxBytes)   { alert(`File too large (max 10MB): ${f.name}`); continue; }
-          const base64 = await fileToBase64(f); // returns only the base64 part
+          if (f.size > perFileMax)   { alert(`File too large (>2MB): ${f.name}`); continue; }
+          totalBytes += f.size;
+          if (totalBytes > totalMax) { alert("Total files exceed 4MB. Please remove some files."); break; }
+          const base64 = await fileToBase64(f);
           attachments.push({ filename: f.name, contentType: f.type, content: base64 });
         }
       }
@@ -708,20 +706,19 @@ function setupPopupForm() {
         body: JSON.stringify(payload)
       });
 
-      if (!resp.ok) throw new Error(await resp.text());
+      const text = await resp.text();
+      if (!resp.ok) throw new Error(text || "Request failed");
       alert("Thanks! Your project was sent successfully.");
-      form.reset();
-      modal.classList.remove("active");
+      form.reset(); modal.classList.remove("active");
     } catch (err) {
       console.error(err);
-      alert("Sorry—there was a problem sending. Please try again.");
+      alert("Sorry—there was a problem sending. Please try smaller files.");
     } finally {
       if (btn) { btn.disabled = false; btn.textContent = old || "Send"; }
     }
   });
 }
 
-// helper – strips the "data:*;base64," prefix
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
@@ -734,8 +731,6 @@ function fileToBase64(file) {
     r.readAsDataURL(file);
   });
 }
-
-
 
 // new  
 
