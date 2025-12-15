@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Horus Glass LLC – Custom Shower Glass & Mirrors</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    
+    <div class="logo">
+      <img class="logo-image" src="assets/horus-glass-logo.jpg" alt="Horus Glassworks logo" />
+      <div class="logo-text">
+        <div class="logo-textbox"><span class="logo-title">HORUS GLASS LLC</span><br>
+        <span class="logo-subtitle">Luxury Showers &<br> Custom GlassWork</span>
+        </div>
+	  </div>
+    </div>
+<nav class="main-nav">
+      <a href="#hero">Home</a>
+      <a href="#configurator">Design Your Shower</a>
+      <a href="#gallery">Projects</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#how-it-works">How It Works</a>
+      <button class="btn-outline" id="openAuthBtn">Login / Register</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="hero">
+      <div class="hero-content">
+        <h1>Design your frameless shower online with <span>Horus Glass</span></h1>
+        <p>
+          Choose your hardware finish, glass thickness, and layout. Get an instant estimate,<br>
+          Upload bathroom photos, and track your installation in one place<br>
+		  NO more waiting a eternity for your shower design, here you get a estimate in seconds.<br>
+        </p>
+        <div class="hero-actions">
+          <a href="#configurator" class="btn-primary">Start Shower Designer</a>
+          <a href="#gallery" class="btn-secondary">View Real Projects</a>
+        </div>
+        <div class="hero-badges">
+          <span>Serving all New England</span>
+          <span>Tempered & laminated glass</span>
+          <span>Professional installation</span>
+        </div>
+      </div>
+      
+	  
+	  
+        <!-- This is your carrousel of pictures, make sure pics are named : hero-x.jpg  -->
+        
+		<div class="hero-carousel">
+  <div class="hero-slide active">
+    <img src="assets/hero1.jpeg" alt="Luxury frameless shower by Horus Glass" />
+  </div>
+  <div class="hero-slide">
+    <img src="assets/hero2.jpeg" alt="Glass railing installation" />
+  </div>
+  <div class="hero-slide">
+    <img src="assets/hero3.jpeg" alt="Custom shower enclosure" />
+  </div>
+  
+
+  <!-- Navigation arrows -->
+  <button class="hero-nav hero-prev">&#10094;</button>
+  <button class="hero-nav hero-next">&#10095;</button>
+
+  <!-- Dots -->
+  <div class="hero-dots">
+    <span class="hero-dot active" data-index="0"></span>
+    <span class="hero-dot" data-index="1"></span>
+    <span class="hero-dot" data-index="2"></span>
+  </div>
+</div>
+
+		
+		
+    </section>
+
+    <!-- CONFIGURATOR -->
+    <section id="configurator" class="configurator">
+      <div class="section-heading">
+        <h2>Interactive Shower Designer</h2>
+        <p>
+          Create Your Rough Estimate Project, see a realistic visual representation,<br> 
+		  and get an estimated price in Real Time.<br>
+          <h2 class="warningstrong">Final pricing will be confirmed on-site measurement</h2>
+        </p>
+      </div>
+
+      <div class="config-layout">
+        <!-- LEFT: FORM -->
+        <div class="config-form">
+          <h3>1. Basic Options</h3>
+          <div class="form-grid">
+            <label>
+              <b>Hardware Color</b>
+              <select id="hardwareColor">
+                <option value="chrome">Polished Chrome</option>
+                <option value="black">Matte Black</option>
+                <option value="brushed-nickel">Brushed Nickel</option>
+                <option value="gold">Brushed Gold</option>
+              </select>
+            </label>
+
+            <label>
+              <b>Glass Thickness</b>
+              <select id="glassThickness">
+                <option value="0.375">3/8&quot; (10mm)</option>
+                <option value="0.5">1/2&quot; (12mm)</option>
+              </select>
+            </label>
+
+            <label>
+              <b>Door Type</b>
+              <select id="doorType">
+                <option value="swing">Swing Door</option>
+                <option value="sliding">Sliding Door</option>
+              </select>
+            </label>
+
+            <label>
+              <b>Recommended Height (in)</b>
+              <input type="number" id="glassHeight" value="78" min="70" max="96" />
+              <small class="warning">We recommend between 76&quot;–82&quot; depending on your ceiling height.</small>
+            </label>
+
+            <label>
+              <b>Number of Glass Panels</b>
+              <input type="number" id="panelCount" value="3" min="1" max="5" />
+              <small class="warning">Example: fixed panel + door + return panel = 3</small>
+            </label>
+          </div>
+
+          <h3><b>2. Panel Widths (inches)</b> </h3>
+          <div id="panelInputs" class="panel-inputs">
+            <!-- JS will generate per-panel width inputs here -->
+          </div>
+
+          <p class="template-note">
+            <b>These widths are for your <strong>rough idea only</strong>. A Horus Glass template
+            specialist will visit your home to take precise laser measurements before final glass is ordered. </b><br>
+			<span class="warningstrong">Do Not Worry</span>. You will only be charged the first 50% after confirming you Shower Layout is to your like and signed for.
+          </p>
+
+
+          <b><h3>3. Shower Opening Type</h3></b>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="layoutType" value="inline" checked />
+              Inline / Straight (all panels in one line)
+            </label>
+            <label>
+              <input type="radio" name="layoutType" value="corner" />
+              Corner / L-Shaped (return panel)
+            </label>
+            <label>
+              <input type="radio" name="layoutType" value="u-shape" />
+              U-Shaped / 3-Sided (curve symbol)
+            </label>
+          </div>
+
+          <h3>4. Measurements & Photos</h3>
+          <label>
+            Total Opening Width (in)
+            <input type="number" id="totalWidth" placeholder="e.g. 60" />
+          </label>
+          <label>
+            Ceiling Height (in)
+            <input type="number" id="ceilingHeight" placeholder="e.g. 96" />
+          </label>
+
+          <label class="file-upload">
+            Bathroom Photo
+            <input type="file" id="bathroomPhoto" accept="image/*" />
+            <span class="file-hint">Upload at least one clear photo of your existing bathroom.</span>
+          </label>
+
+          <label>
+            Notes for Designer
+            <textarea id="projectNotes" rows="3" placeholder="Niche locations, half-walls, steam shower, special requests, etc."></textarea>
+          </label>
+        </div>
+
+        <!-- RIGHT: DRAWING + PRICE -->
+        <div class="config-preview">
+          <h3>Guided Sketch & Lux Preview</h3>
+          <p class="preview-help">
+            The box below shows a more realistic frameless glass enclosure with soft reflections
+            and hardware hints based on your selections.
+          </p>
+
+          <div class="canvas-wrapper">
+            <canvas id="showerCanvas" width="420" height="280">
+              Your browser does not support HTML canvas.
+            </canvas>
+          </div>
+          <p class="preview-legend">
+            <span class="legend-color legend-door"></span> Door panel
+            <span class="legend-color legend-fixed"></span> Fixed panel
+            <span class="legend-color legend-curve"></span> U-shaped / curve indicator
+          </p>
+
+          <!-- PRICING NOTE:
+               To change how prices are calculated (glass rate per sq ft, hardware premiums,
+               markup, minimum project value), open app.js and edit the updatePrice() function.
+               Look for sections:
+                 - baseRate (per sq ft)
+                 - doorPremium
+                 - extraPanelsPremium
+                 - markup (1.22)
+                 - minimum project total (2500)
+          -->
+          <div class="price-box">
+            <h3>Estimated Price</h3>
+            <div class="price-main">
+              <span id="priceAmount">$0.00</span>
+              <small>Rough estimate – subject to final field measurements.</small>
+            </div>
+            <div class="price-breakdown">
+              <p><strong>Glass Area:</strong> <span id="glassAreaSqft">0</span> sq ft (approx.)</p>
+              <p><strong>Glass Rate:</strong> <span id="glassRateLabel">$0.00 / sq ft</span></p>
+              <p><strong>Hardware & Extras:</strong> <span id="hardwareCostLabel">$0.00</span></p>
+            </div>
+          </div>
+
+          <button class="btn-primary full-width" id="saveDesignBtn">Save Design & Continue</button>
+          <p class="login-hint">
+            <span class="warningstrong">You will need to create an Account or Log in to Submit this project, pay your deposit,
+            and track installation status</span>.<br>
+			<b>if your shower has a different than usual shape dont Worry.<br> 
+			you can Email us Your Desired Shower Drawing and Measures</br>
+			We Will Get back at you within a Business Day.<br>
+			Click <a href="#" id="openForm" class="highlight-link">HERE</a> to Email us your project</b>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT GALLERY -->
+    <section id="gallery" class="gallery">
+      <div class="section-heading">
+        <h2>Recent Projects</h2>
+        <p>Real frameless showers, railings, and custom glass installations by Horus Glass.</p>
+      </div>
+      <div class="gallery-grid">
+        <!-- TODO: Replace all placeholder images with real project photos.
+             Place your images in /assets and update the filenames or overwrite the placeholders. -->
+        <article class="gallery-item">
+          <img src="assets/project-1-placeholder.jpg" alt="Customer frameless shower installation" />
+          <div class="gallery-info">
+            <h3>Frameless Corner Shower – Milford, MA</h3>
+            <p>3/8&quot; clear tempered glass with matte black hardware and custom door pull.</p>
+          </div>
+        </article>
+        <article class="gallery-item">
+          <img src="assets/project-2-placeholder.jpg" alt="Glass railing installation" />
+          <div class="gallery-info">
+            <h3>Glass Railing – Boston, MA</h3>
+            <p>Low-iron glass railing with brushed stainless steel posts and top rail.</p>
+          </div>
+        </article>
+        <article class="gallery-item">
+          <img src="assets/project-3-placeholder.jpg" alt="Inline frameless shower" />
+          <div class="gallery-info">
+            <h3>Inline Frameless Shower – Cape Cod</h3>
+            <p>Steam-height enclosure, 1/2&quot; glass, brushed nickel hardware.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="reviews">
+      <div class="section-heading">
+        <h2>Verified Google Reviews</h2>
+        <p>
+          All reviews below are from real Horus Glass customers. Click “View on Google” to verify
+          directly on our Google Business profile.
+        </p>
+      </div>
+
+      <div class="reviews-layout">
+        <div class="reviews-list" id="reviewsList">
+          <!-- Example static reviews as fallback if API is not integrated yet -->
+          <article class="review-card">
+            <div class="review-header">
+              <h3>5.0 ★★★★★</h3>
+              <span>Milford, MA</span>
+            </div>
+            <p>
+              “Horus Glass did an amazing job on our new frameless shower. Perfect measurements,
+              clean install, and they left the bathroom spotless.”
+            </p>
+            <span class="review-name">— J. S.</span>
+          </article>
+
+          <article class="review-card">
+            <div class="review-header">
+              <h3>5.0 ★★★★★</h3>
+              <span>Boston, MA</span>
+            </div>
+            <p>
+              “Super professional from quote to install. The online designer helped us understand
+              costs before they even came out.”
+            </p>
+            <span class="review-name">— M. R.</span>
+          </article>
+        </div>
+
+        <aside class="reviews-info">
+          <h3>Connect to Live Google Reviews</h3>
+          <ol>
+            <li>
+              Create a small backend endpoint (for example <code>/api/google-reviews</code>) that uses
+              the Google Places API to fetch your latest reviews.
+            </li>
+            <li>
+              Return the reviews to this website as JSON. We already include JavaScript to fetch and
+              display them – just update the endpoint URL in <code>app.js</code>.
+            </li>
+            <li>
+              Add your official Google Business profile link below so visitors can verify every review.
+            </li>
+          </ol>
+          <!-- TODO: Replace # with your real Google Business profile URL -->
+          <a href="#" target="_blank" class="btn-outline">View Horus Glass on Google</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works" class="how-it-works">
+      <div class="section-heading">
+        <h2>From Idea to Installed Glass</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-number">1</span>
+          <h3>Design & Rough Estimate</h3>
+          <p>
+            Use the online designer to choose hardware, glass thickness, and panel layout.
+            Submit your measurements and photos for a rough estimate.
+          </p>
+        </div>
+        <div class="step-card">
+          <span class="step-number">2</span>
+          <h3>On-Site Measurement</h3>
+          <p>
+            A Horus Glass technician visits your home to take precise laser measurements and
+            confirm all details before glass fabrication.
+          </p>
+        </div>
+        <div class="step-card">
+          <span class="step-number">3</span>
+          <h3>Fabrication & Scheduling</h3>
+          <p>
+            We order your custom tempered glass and coordinate installation dates directly
+            from your account dashboard.
+          </p>
+        </div>
+        <div class="step-card">
+          <span class="step-number">4</span>
+          <h3>Professional Installation</h3>
+          <p>
+            Our team installs your glass, sets hardware, seals edges, and does a full quality
+            check so everything looks and works perfectly.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- AUTH MODAL -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal">
+      <button class="modal-close" id="closeAuthBtn">&times;</button>
+      <div class="modal-tabs">
+        <button class="tab-btn active" data-tab="loginTab">Login</button>
+        <button class="tab-btn" data-tab="registerTab">Register</button>
+      </div>
+
+      <div class="tab-content active" id="loginTab">
+        <h3>Login to Horus Glass</h3>
+        <form id="loginForm">
+          <label>
+            Email
+            <input type="email" id="loginEmail" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="loginPassword" required />
+          </label>
+          <button type="submit" class="btn-primary full-width">Login</button>
+          <p class="form-hint">
+            Once integrated with your backend (e.g. Firebase Auth, Supabase, or custom API),
+            this form will authenticate users and load their saved projects.
+          </p>
+        </form>
+      </div>
+
+      <div class="tab-content" id="registerTab">
+        <h3>Create an Account</h3>
+        <form id="registerForm">
+          <label>
+            Full Name
+            <input type="text" id="registerName" required />
+          </label>
+          <label>
+            Email
+            <input type="email" id="registerEmail" required />
+          </label>
+          <label>
+            Phone
+            <input type="tel" id="registerPhone" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="registerPassword" required />
+          </label>
+          <button type="submit" class="btn-primary full-width">Create Account</button>
+          <p class="form-hint">
+            Connect this form to your backend to store customers, send confirmation emails,
+            and allow them to log in and track projects.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div>
+        <h3>Horus Glass LLC</h3>
+        <p>Custom shower glass, mirrors, wine cellars, office partitions & glass railings.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Email: <a href="mailto:horusglassworks@gmail.com">horusglassworks@gmail.com</a></p>
+        <p>Costumer Support Phone: <a href="tel:+14013476012">(401) 347-6012</a></p>
+		<p>Costumer Support Phone: <a href="tel:+14013476012">(401) 347-6390</a></p>
+      </div>
+      <div>
+        <h4>Service Area</h4>
+        <p>Serving all New England, including Boston, Cape Cod, Martha's Vineyard & more.</p>
+      </div>
+    </div>
+    <p class="footer-bottom">© <span id="year"></span> Horus Glass LLC. All rights reserved.</p>
+  </footer>
+
+  <script src="app.js"></script>
+  
+  <div id="popupForm" class="modal-overlay">
+  <div class="modal-box">
+    <button id="closeForm" class="close-btn">&times;</button>
+
+    <h2>Send us your project</h2>
+
+    <form id="customerForm" method="POST" enctype="multipart/form-data">
+
+      <label>
+        Full Name
+        <input type="text" name="name" required>
+      </label>
+
+      <label>
+        Email
+        <input type="email" name="email" required>
+      </label>
+
+      <label>
+        Phone
+        <input type="tel" name="phone">
+      </label>
+
+      <label>
+        Upload Pictures
+        <input type="file" name="files[]" multiple required>
+      </label>
+
+      <label>
+        Describe Your Project
+        <textarea name="message" rows="4"></textarea>
+      </label>
+
+      <button class="btn-primary" type="submit">Send</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
