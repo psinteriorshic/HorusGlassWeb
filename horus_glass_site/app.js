@@ -725,3 +725,113 @@ document.addEventListener("DOMContentLoaded", () => {
   const layoutRadios = document.querySelectorAll('input[name="layoutType"]');
   layoutRadios.forEach((radio) => radio.addEventListener("change", drawShowerLayout));
 });
+
+
+
+
+
+
+
+// Backend  for your page
+function setupPopupForm() {
+  const modal = document.getElementById("popupForm");
+  const openBtn = document.getElementById("openForm");
+  const closeBtn = document.getElementById("closeForm");
+  const form = document.getElementById("customerForm");
+  if (!modal || !openBtn || !closeBtn || !form) return;
+
+  openBtn.addEventListener("click", (e) => { e.preventDefault(); modal.classList.add("active"); });
+  closeBtn.addEventListener("click", () => modal.classList.remove("active"));
+  modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove("active"); });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]'); const old = btn?.textContent;
+    if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+
+    const fd = new FormData(form);
+    const payload = {
+      type: "popup",
+      name: fd.get("name") || "",
+      email: fd.get("email") || "",
+      phone: fd.get("phone") || "",
+      message: fd.get("message") || ""
+    };
+
+    try {
+      const resp = await fetch("/api/submit-project", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!resp.ok) throw new Error("Request failed");
+      alert("Thanks! Your project was sent.");
+      form.reset(); modal.classList.remove("active");
+    } catch (err) {
+      console.error(err);
+      alert("Sorry—there was a problem sending. Please try again.");
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = old || "Send"; }
+    }
+  });
+}
+
+function setupSaveDesign() {
+  const btn = document.getElementById("saveDesignBtn");
+  if (!btn) return;
+
+  btn.addEventListener("click", async () => {
+    // Read current selections/values from your designer controls
+    const hardwareColor   = document.getElementById("hardwareColor")?.value;
+    const glassThickness  = Number(document.getElementById("glassThickness")?.value || 0.375);
+    const doorType        = document.getElementById("doorType")?.value;
+    const glassHeight     = Number(document.getElementById("glassHeight")?.value || 78);
+    const totalWidth      = Number(document.getElementById("totalWidth")?.value || 0);
+    const panelCount      = Number(document.getElementById("panelCount")?.value || 0);
+    const layoutType      = document.querySelector('input[name="layoutType"]:checked')?.value || "inline";
+
+    const panels = [];
+    for (let i = 1; i <= panelCount; i++) {
+      const v = Number(document.getElementById(`panelWidth-${i}`)?.value || 0);
+      if (v) panels.push(v);
+    }
+
+    // Pull the numbers your pricing code displays
+    const priceAmount       = document.getElementById("priceAmount")?.textContent || "";
+    const glassAreaSqft     = document.getElementById("glassAreaSqft")?.textContent || "";
+    const hardwareCostLabel = document.getElementById("hardwareCostLabel")?.textContent || "";
+
+    const email = prompt("Enter your email to receive your estimate:");
+    if (!email) { alert("Email is required to save."); return; }
+
+    const payload = {
+      type: "designer",
+      email, hardwareColor, glassThickness, doorType, glassHeight,
+      totalWidth, panelCount, panels, layoutType,
+      priceAmount, glassAreaSqft, hardwareCostLabel
+    };
+
+    try {
+      btn.disabled = true; btn.textContent = "Saving…";
+      const resp = await fetch("/api/submit-project", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!resp.ok) throw new Error("Request failed");
+      alert("Saved! We’ll reach out to finalize measurements & scheduling.");
+    } catch (err) {
+      console.error(err);
+      alert("Sorry—couldn’t save your design. Please try again.");
+    } finally {
+      btn.disabled = false; btn.textContent = "Save Design & Continue";
+    }
+  });
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  // your existing initializers...
+  setupPopupForm();
+  setupSaveDesign();
+});
