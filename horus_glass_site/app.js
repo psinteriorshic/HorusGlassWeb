@@ -658,44 +658,84 @@ function setupPopupForm() {
   const openBtn = document.getElementById("openForm");
   const closeBtn = document.getElementById("closeForm");
   const form = document.getElementById("customerForm");
-
   if (!modal || !openBtn || !closeBtn || !form) return;
 
   // Open / close
-  openBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    modal.classList.add("active");
-  });
+  openBtn.addEventListener("click", (e) => { e.preventDefault(); modal.classList.add("active"); });
   closeBtn.addEventListener("click", () => modal.classList.remove("active"));
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.classList.remove("active");
-  });
+  modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove("active"); });
 
-  // Submit via EmailJS
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Optional: basic UX lock
     const btn = form.querySelector('button[type="submit"]');
-    const btnText = btn ? btn.textContent : null;
+    const old = btn?.textContent;
     if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
 
     try {
-      // Make sure you've created a service and template in EmailJS
-      // and your template fields match: name, email, phone, message
-      await emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", form);
+      const fd = new FormData(form);
 
+      // Collect allowed files and convert to base64
+      const filesInput = document.getElementById("projectFiles");
+      const allowed = new Set([
+        "image/png", "image/jpeg",
+        "application/zip", "application/json"
+      ]);
+      const maxBytes = 10 * 1024 * 1024; // 10MB cap per file
+      const attachments = [];
+
+      if (filesInput?.files?.length) {
+        for (const f of Array.from(filesInput.files)) {
+          if (!allowed.has(f.type)) { alert(`File type not allowed: ${f.name}`); continue; }
+          if (f.size > maxBytes)   { alert(`File too large (max 10MB): ${f.name}`); continue; }
+          const base64 = await fileToBase64(f); // returns only the base64 part
+          attachments.push({ filename: f.name, contentType: f.type, content: base64 });
+        }
+      }
+
+      const payload = {
+        type: "popup",
+        name: fd.get("name") || "",
+        email: fd.get("email") || "",
+        phone: fd.get("phone") || "",
+        message: fd.get("message") || "",
+        attachments
+      };
+
+      const resp = await fetch("/api/submit-project", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!resp.ok) throw new Error(await resp.text());
       alert("Thanks! Your project was sent successfully.");
       form.reset();
       modal.classList.remove("active");
     } catch (err) {
       console.error(err);
-      alert("Sorry—there was a problem sending your message. Please try again.");
+      alert("Sorry—there was a problem sending. Please try again.");
     } finally {
-      if (btn) { btn.disabled = false; btn.textContent = btnText; }
+      if (btn) { btn.disabled = false; btn.textContent = old || "Send"; }
     }
   });
 }
+
+// helper – strips the "data:*;base64," prefix
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => {
+      const s = String(r.result || "");
+      const i = s.indexOf(",");
+      resolve(i >= 0 ? s.slice(i + 1) : s);
+    };
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+
+
 
 // new  
 
